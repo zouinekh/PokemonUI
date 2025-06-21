@@ -95,4 +95,8 @@ export class PokemonListComponent implements OnInit {
 
     this.editModal?.hide();
   }
+
+  navigateToTeamList(): void {
+    this.router.navigate(['/start']);
+  }
 }

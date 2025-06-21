@@ -1,0 +1,113 @@
+<div class="battle-container" *ngIf="battleInProgress || battleEnded">
+  <!-- Team 1 Pokemon List -->
+  <div class="team-pokemon-list team1">
+    <h3>{{ team1?.name || 'Team 1' }}</h3>
+    <div class="pokemon-list">
+      <div *ngFor="let pokemon of team1?.pokemons" class="pokemon-card" 
+           [class.active]="currentBattle?.team1_pokemon?.id === pokemon.id"
+           [class.fainted]="pokemon.life_after <= 0">
+        <img [src]="pokemon.image" [alt]="pokemon.name">
+        <div class="pokemon-info">
+          <span class="pokemon-name">{{ pokemon.name }}</span>
+          <div class="health-bar">
+            <div class="health-fill" 
+                 [style.width.%]="getHealthPercentage(pokemon)"
+                 [class.fainted]="(pokemon.life_after || 0) <= 0">
+            </div>
+            <span class="health-text">
+              {{ getCurrentLife(pokemon) }}/{{ getMaxLife(pokemon) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Battle Arena -->
+  <div class="battle-arena">
+    <div class="battle-log">
+      <div class="log-entry" *ngIf="currentBattle">
+        <p>Round {{ currentBattle?.round }}</p>
+        <p *ngIf="currentBattle?.team1_pokemon?.life_after !== undefined && currentBattle.team1_pokemon.life_after <= 0">
+          {{ currentBattle.team1_pokemon?.name }} fainted!
+        </p>
+        <p *ngIf="currentBattle?.team2_pokemon?.life_after !== undefined && currentBattle.team2_pokemon.life_after <= 0">
+          {{ currentBattle.team2_pokemon?.name }} fainted!
+        </p>
+      </div>
+    </div>
+    
+    <div class="battle-pokemon team1-pokemon" *ngIf="currentBattle && currentBattle.team1_pokemon; let pokemon1">
+      <div class="pokemon-health">
+        <div class="health-bar">
+          <div class="health-fill" 
+               [style.width.%]="getHealthPercentage(pokemon1)">
+          </div>
+          <span class="health-text">
+            {{ getCurrentLife(pokemon1) }}/{{ getMaxLife(pokemon1) }}
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="battle-pokemon team2-pokemon" *ngIf="currentBattle && currentBattle.team2_pokemon; let pokemon2">
+      <img [src]="getPokemonImage(pokemon2)" 
+           [alt]="pokemon2.name"
+           [class.fainted]="pokemon2.life_after <= 0">
+      <div class="pokemon-health">
+        <div class="health-bar">
+          <div class="health-fill" 
+               [style.width.%]="getHealthPercentage(pokemon2)">
+          </div>
+          <span class="health-text">
+            {{ getCurrentLife(pokemon2) }}/{{ getMaxLife(pokemon2) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team 2 Pokemon List -->
+  <div class="team-pokemon-list team2">
+    <h3>{{ team2?.name || 'Team 2' }}</h3>
+    <div class="pokemon-list">
+      <div *ngFor="let pokemon of team2?.pokemons" class="pokemon-card" 
+           [class.active]="currentBattle?.team2_pokemon?.id === pokemon.id"
+           [class.fainted]="pokemon.life_after <= 0">
+        <img [src]="pokemon.image" [alt]="pokemon.name">
+        <div class="pokemon-info">
+          <span class="pokemon-name">{{ pokemon.name }}</span>
+          <div class="health-bar">
+            <div class="health-fill" 
+                 [style.width.%]="getHealthPercentage(pokemon)"
+                 [class.fainted]="(pokemon.life_after || 0) <= 0">
+            </div>
+            <span class="health-text">
+              {{ getCurrentLife(pokemon) }}/{{ getMaxLife(pokemon) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Battle Result -->
+<div class="battle-result" *ngIf="battleEnded">
+  <div class="result-card">
+    <h2>Battle Ended!</h2>
+    <h3 *ngIf="winner !== 'Draw'">{{ winner }} wins the battle!</h3>
+    <h3 *ngIf="winner === 'Draw'">It's a draw!</h3>
+    <button class="btn btn-primary" (click)="startBattle()" *ngIf="battleRounds.length > 0">
+      Battle Again
+    </button>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-state" *ngIf="!battleInProgress && !battleEnded">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <p>Preparing battle...</p>
+</div>

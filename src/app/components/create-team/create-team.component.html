@@ -1,4 +1,4 @@
-<div class="min-vh-100  bg text-white d-flex flex-column align-items-center pokemon-list" >
+<div class="min-vh-100 bg text-white d-flex flex-column align-items-center pokemon-list">
   <h2 class="display-4 fw-bold mb-4 pokemon-title">Create Your Pokémon Team</h2>
   
   <!-- Team Creation Area -->
@@ -13,17 +13,17 @@
                  class="team-slot" 
                  [class.filled]="selectedPokemons[i]"
                  (click)="removePokemon(i)">
-                 <ng-container *ngIf="pokemonDetails[i]; else emptySlot">
-                  <div *ngIf="pokemonDetails[i] as pokemon" class="slot-content">  
-                    <img [src]="pokemon?.image"  height="50" width="50">
-                    <span class="team-pokemon-name">{{ pokemon?.name }}</span>
-                    <p class="card-text">Type: 
-                      <span class="pokemon-type">
-                        {{ pokemon.type?.name }}
-                      </span>
-                    </p>
-                  </div>
-                </ng-container>
+              <ng-container *ngIf="pokemonDetails[i]; else emptySlot">
+                <div *ngIf="pokemonDetails[i] as pokemon" class="slot-content">  
+                  <img [src]="pokemon?.image" height="50" width="50">
+                  <span class="team-pokemon-name">{{ pokemon?.name }}</span>
+                  <p class="card-text">Type: 
+                    <span class="pokemon-type">
+                      {{ pokemon.type?.name }}
+                    </span>
+                  </p>
+                </div>
+              </ng-container>
               <ng-template #emptySlot>
                 <div class="slot-empty">
                   <div (click)="showModal(i)">
@@ -59,11 +59,18 @@
             </div>
             
             <div class="text-center">
-              <button type="submit" class="btn btn-save-team" [disabled]="selectedPokemons.length < 1">
+              <button type="submit" class="btn btn-save-team" [disabled]="pokemonDetails.length < 1">
                 Save Team
               </button>
               <button type="button" class="btn btn-back" (click)="goBack()">
                 Back to Selection
+              </button>
+            </div>
+            
+            <div class="text-center mt-4">
+              <p class="mb-3">Ready to battle?</p>
+              <button type="button" class="btn btn-battle" (click)="navigateToTeamSelection()" [disabled]="!teamList || teamList.length < 2">
+                Start Battle
               </button>
             </div>
           </form>
@@ -71,22 +78,22 @@
       </div>
     </div>
   </div>
-</div>
-<div *ngIf="showPokemonSelector" class="pokemon-selector-overlay d-flex align-items-center justify-content-center">
-  <div class="pokemon-selector-container shadow-lg bg-white rounded p-4">
-    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-      <h5 class="mb-0 text-primary fw-bold">Select Pokémon for Slot {{currentSlotIndex + 1}}</h5>
-      <button class="btn-close" (click)="showPokemonSelector = false" aria-label="Close"></button>
-    </div>
 
-    <div class="pokemon-grid">
-      <div *ngFor="let pokemon of listOfAllPokemons" 
-           class="pokemon-card border rounded text-center p-2 mx-2 my-2"
-           (click)="selectPokemon(pokemon)">
-           <div *ngIf="pokemon"> 
-            <img [src]="pokemon?.image" height="60" width="60" class="mb-2">
-            <div class="text-dark fw-semibold">{{ pokemon?.name | titlecase }}</div>
-           </div>
+  <!-- Pokémon Selector Modal -->
+  <div *ngIf="showPokemonSelector" class="pokemon-selector-overlay d-flex align-items-center justify-content-center">
+    <div class="pokemon-selector-container shadow-lg bg-white rounded p-4">
+      <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+        <h5 class="mb-0 text-primary fw-bold">Select Pokémon for Slot {{currentSlotIndex + 1}}</h5>
+        <button class="btn-close" (click)="showPokemonSelector = false" aria-label="Close"></button>
+      </div>
+
+      <div class="pokemon-grid">
+        <div *ngFor="let pokemon of listOfAllPokemons" 
+             class="pokemon-card border rounded text-center p-2 mx-2 my-2"
+             (click)="selectPokemon(pokemon)">
+          <img [src]="pokemon?.image" height="60" width="60" class="mb-2">
+          <div class="text-dark fw-semibold">{{ pokemon?.name | titlecase }}</div>
+        </div>
       </div>
     </div>
   </div>

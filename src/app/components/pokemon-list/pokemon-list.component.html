@@ -50,7 +50,23 @@
         </li>
       </ul>
     </div>
-  
+
+    <!-- Action Buttons -->
+    <div class="d-flex gap-3 mt-4 mb-5">
+      <button 
+        class="btn btn-lg btn-primary"
+        [disabled]="selectedPokemons.length === 0"
+        (click)="createTeam()">
+        Create Team
+      </button>
+      
+      <button 
+        class="btn btn-lg btn-outline-light"
+        (click)="navigateToTeamList()">
+        View Teams
+      </button>
+    </div>
+
     <!-- Edit Modal -->
     <div class="modal fade" id="editPokemonModal" tabindex="-1" aria-labelledby="editPokemonModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -109,22 +125,4 @@
         </div>
       </div>
     </div>
-    <button class="create-team-btn" (click)="createTeam()">
-        <span class="btn-text">Create Team</span>
-        <span class="btn-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-          </svg>
-        </span>
-        <span class="btn-particles">
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-          <span class="particle"></span>
-        </span>
-      </button>
   </div>

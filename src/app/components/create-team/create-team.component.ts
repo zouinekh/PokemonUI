@@ -21,6 +21,7 @@ export class CreateTeamComponent implements OnInit {
     description: '',
     pokemons: [] as number[]
   };
+  teamList: any[] = []; // Add this if not already present
 
   constructor(
     private router: Router,
@@ -73,11 +74,12 @@ export class CreateTeamComponent implements OnInit {
   }
 
   saveTeam(): void {
+    console.log(this.team)
     this.team.pokemons = this.selectedPokemons;
     this.team.name = this.team.name.trim();
     this.team.description = this.team.description.trim();
 
-    if (this.team.name && this.team.description && this.team.pokemons.length > 0) {
+    if (this.team.name && this.team.description && this.pokemonDetails.length > 0) {
       // Save the team to the server or local storage
       console.log('Team saved:', this.team); 
       this.http.post('http://localhost:3000/teams', {team_name:this.team.name,description:this.team.description,pokemon_ids:this.pokemonDetails.map((p) => p?.id)}).subscribe({
@@ -108,5 +110,8 @@ export class CreateTeamComponent implements OnInit {
   }
   goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+  navigateToTeamSelection(): void {
+    this.router.navigate(['/start']);
   }
 }

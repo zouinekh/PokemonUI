@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +11,7 @@ import { CreateTeamComponent } from './components/create-team/create-team.compon
 import { FormsModule } from '@angular/forms';
 import { TeamListComponent } from './components/team-list/team-list.component';
 import { StartGameComponent } from './components/start-game/start-game.component';
+import { BattleSceneComponent } from './components/battle-scene/battle-scene.component';
 
 
 export function playerFactory() {
@@ -23,10 +25,12 @@ export function playerFactory() {
     PokemonListComponent,
     CreateTeamComponent,
     TeamListComponent,
-    StartGameComponent
+    StartGameComponent,
+    BattleSceneComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule
