@@ -1,0 +1,152 @@
+/* Updated create-team.component.css */
+.pokemon-container {
+  max-width: 900px;
+  margin-top: 2rem;
+}
+
+.team-display-card {
+  background: linear-gradient(145deg, #f8f9fa, #ffffff);
+  border: 3px solid #ff0000;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 5px 15px rgba(255, 203, 5, 0.5);
+}
+
+.team-form-card {
+  background: linear-gradient(145deg, #f8f9fa, #ffffff);
+  border: 3px solid #ff0000;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(255, 203, 5, 0.5);
+}
+
+.team-subtitle {
+  color: #003366;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
+.team-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.team-slot {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+.team-slot.selected {
+  border-color: #ffcb05;
+  background: linear-gradient(145deg, #ff0000, #ffffff);
+  box-shadow: 0 5px 15px rgba(255, 203, 5, 0.7);
+}
+
+.team-slot:hover {
+  transform: translateY(-5px) scale(1.03);
+  border-color: #ffcb05;
+  box-shadow: 0 5px 15px rgba(255, 203, 5, 0.5);
+}
+
+.slot-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.team-pokemon-image {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.slot-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #003366;
+}
+
+.pokemon-label {
+  color: #003366;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.pokemon-input {
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid #003366;
+  color: #003366;
+  font-weight: bold;
+}
+
+.pokemon-input:focus {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #ffcb05;
+  color: #003366;
+  box-shadow: 0 0 0 0.25rem rgba(255, 203, 5, 0.25);
+}
+
+.custom-select-btn {
+  background: #66bb6a;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.custom-select-btn:hover {
+  background: #4caf50;
+  transform: translateY(-2px);
+}
+
+.custom-select-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.custom-edit-btn {
+  background: #5c6bc0;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.custom-edit-btn:hover {
+  background: #3f51b5;
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .team-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .team-slots {
+    grid-template-columns: 1fr;
+  }
+  
+  .team-subtitle {
+    font-size: 1.2rem;
+  }
+}

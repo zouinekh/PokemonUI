@@ -1,0 +1,72 @@
+<div class="min-vh-100 bg-primary text-white d-flex flex-column align-items-center pokemon-list" >
+  <h2 class="display-4 fw-bold mb-4 pokemon-title">Create Your Pokémon Team</h2>
+  
+  <!-- Team Creation Area -->
+  <div class="container team-creation-area">
+    <div class="row justify-content-center">
+      <!-- Selected Pokémon Team -->
+      <div class="col-lg-8">
+        <div class="team-display mb-5">
+          <h3 class="text-center mb-4 pokemon-subtitle">Your Dream Team</h3>
+          <div class="team-slots">
+            <div *ngFor="let slot of [1,2,3,4,5,6]; let i = index" 
+                 class="team-slot" 
+                 [class.filled]="selectedPokemons[i]"
+                 (click)="removePokemon(i)">
+                 <ng-container *ngIf="selectedPokemons[i]; else emptySlot">
+                  <div *ngIf="pokemonDetails[i] as pokemon" class="slot-content">
+                    <img [src]="pokemon?.image" ...>
+                    <span class="team-pokemon-name">{{ pokemon?.name }}</span>
+                    <p class="card-text">Type: 
+                      <span class="pokemon-type" [attr.data-type]="pokemon.type?.name">
+                        {{ pokemon.type?.name }}
+                      </span>
+                    </p>
+                  </div>
+                </ng-container>
+              <ng-template #emptySlot>
+                <div class="slot-empty">
+                  <svg viewBox="0 0 24 24" width="40" height="40">
+                    <path fill="#ffcb05" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                  </svg>
+                  <span>Slot {{i+1}}</span>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Details Form -->
+        <div class="team-form">
+          <h3 class="text-center mb-4 pokemon-subtitle">Team Details</h3>
+          <form (ngSubmit)="saveTeam()">
+            <div class="mb-4">
+              <label for="teamName" class="form-label pokemon-label">Team Name</label>
+              <input type="text" class="form-control pokemon-input" 
+                     id="teamName" [(ngModel)]="team.name" 
+                     name="teamName" required
+                     placeholder="e.g. Elite Four Team">
+            </div>
+            
+            <div class="mb-4">
+              <label for="teamDescription" class="form-label pokemon-label">Description</label>
+              <textarea class="form-control pokemon-input" 
+                        id="teamDescription" [(ngModel)]="team.description" 
+                        name="teamDescription" rows="3"
+                        placeholder="Describe your team strategy"></textarea>
+            </div>
+            
+            <div class="text-center">
+              <button type="submit" class="btn btn-save-team" [disabled]="selectedPokemons.length < 1">
+                Save Team
+              </button>
+              <button type="button" class="btn btn-back" (click)="goBack()">
+                Back to Selection
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

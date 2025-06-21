@@ -10,11 +10,11 @@
   .pokemon-title {
     font-family: 'Pokemon Solid', 'Arial Black', Arial, sans-serif;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    letter-spacing: 9px;
+    letter-spacing: 7px;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
     color: #ffcb05; /* Pokémon yellow */
     animation: pulse 2s ease-in-out infinite;
+    margin-bottom: 40px; /* Space below title */
   }
   
   /* Style the Lottie container */

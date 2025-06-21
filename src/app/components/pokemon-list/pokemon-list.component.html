@@ -1,0 +1,130 @@
+<div class="min-vh-100 bg-primary text-white d-flex flex-column align-items-center pokemon-list" @fadeInOut>
+    <h2 class="display-4 fw-bold mb-4 pokemon-title">Select Your Pokémon</h2>
+    <!-- Add this right before the closing </div> tag of your component --> 
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoadingData" class="text-center mb-4">
+      <div class="spinner-border text-warning" role="status">
+        <span class="visually-hidden">Fetching Pokémon...</span>
+      </div>
+      <p class="fs-4 mt-2">Fetching Pokémon...</p>
+    </div>
+  
+    <!-- Pokémon Cards -->
+    <div *ngIf="!isLoadingData" class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
+        <div *ngFor="let pokemon of pokemons" class="col">
+          <div class="card h-100 pokemon-card" [class.selected]="pokemon.selected">
+            <img [src]="pokemon.image" class="card-img-top pokemon-image" [alt]="pokemon.name">
+            <div class="card-body p-2">
+              <h5 class="card-title pokemon-card-title">{{ pokemon.name }}</h5>
+              <p class="card-text">Type: <span class="pokemon-type" [attr.data-type]="pokemon.type.name">{{ pokemon.type.name }}</span></p>
+              <p class="card-text">Power: {{ pokemon.power }}</p>
+              <p class="card-text">Life: {{ pokemon.life }}</p>
+              
+              <!-- Edit Button -->
+              <div class="d-flex justify-content-between mt-2">
+                <button class="btn btn-sm custom-edit-btn" (click)="openEditModal(pokemon); $event.stopPropagation()" title="Edit">
+                  <!-- Custom SVG edit icon -->
+                  <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path fill="#5c6bc0" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                  </svg>
+                </button>
+                <button class="btn btn-sm custom-select-btn" (click)="togglePokemonSelection(pokemon); $event.stopPropagation()" title="Toggle selection">
+                  <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path fill="#66bb6a" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Selected Pokémon List -->
+    <div *ngIf="selectedPokemons.length" class="mt-4 text-center">
+      <p class="fs-4 pokemon-selected">Selected: {{ selectedPokemons.length }} Pokémon</p>
+      <ul class="list-unstyled">
+        <li *ngFor="let id of selectedPokemons" class="fs-5 pokemon-selected">
+          {{ getPokemonName(id) }}
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editPokemonModal" tabindex="-1" aria-labelledby="editPokemonModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editPokemonModalLabel">Edit {{ editingPokemon?.name }}</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form *ngIf="editingPokemon" (ngSubmit)="updatePokemon()">
+              <div class="mb-3">
+                <label for="pokemonName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="pokemonName" [(ngModel)]="editingPokemon.name" name="name" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="pokemonType" class="form-label">Type</label>
+                <select class="form-select" id="pokemonType" [(ngModel)]="editingPokemon.type.name" name="type">
+                  <option value="Normal">Normal</option>
+                  <option value="Fire">Fire</option>
+                  <option value="Water">Water</option>
+                  <option value="Electric">Electric</option>
+                  <option value="Grass">Grass</option>
+                  <option value="Ice">Ice</option>
+                  <option value="Fighting">Fighting</option>
+                  <option value="Poison">Poison</option>
+                  <option value="Ground">Ground</option>
+                  <option value="Flying">Flying</option>
+                  <option value="Psychic">Psychic</option>
+                  <option value="Bug">Bug</option>
+                  <option value="Rock">Rock</option>
+                  <option value="Ghost">Ghost</option>
+                  <option value="Dragon">Dragon</option>
+                  <option value="Dark">Dark</option>
+                  <option value="Steel">Steel</option>
+                  <option value="Fairy">Fairy</option>
+                </select>
+              </div>
+              
+              <div class="mb-3">
+                <label for="pokemonPower" class="form-label">Power</label>
+                <input type="number" class="form-control" id="pokemonPower" [(ngModel)]="editingPokemon.power" name="power" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="pokemonLife" class="form-label">Life</label>
+                <input type="number" class="form-control" id="pokemonLife" [(ngModel)]="editingPokemon.life" name="life" required>
+              </div>
+              
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="create-team-btn" (click)="createTeam()">
+        <span class="btn-text">Create Team</span>
+        <span class="btn-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+        </span>
+        <span class="btn-particles">
+          <span class="particle"></span>
+          <span class="particle"></span>
+          <span class="particle"></span>
+          <span class="particle"></span>
+          <span class="particle"></span>
+          <span class="particle"></span>
+          <span class="particle"></span>
+          <span class="particle"></span>
+        </span>
+      </button>
+  </div>
