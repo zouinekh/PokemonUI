@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Pokemon } from './models/pokemon-type';
+import { Pokemon, PokemonApiResponse } from './models/pokemon-type';
 import {Team} from "./models/team-type"
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
@@ -17,7 +17,7 @@ export class PokemonService {
     const savedSelections = localStorage.getItem(this.SELECTED_KEY);
     return savedSelections ? JSON.parse(savedSelections) : [];
   }
-
+ 
   saveSelectedPokemons(pokemonIds: number[]): void {
     localStorage.setItem(this.SELECTED_KEY, JSON.stringify(pokemonIds));
   }
@@ -29,7 +29,7 @@ export class PokemonService {
       this.saveSelectedPokemons(current);
     }
   }
-
+  
   removeFromSelected(pokemonId: number): void {
     const current = this.getSelectedPokemons();
     this.saveSelectedPokemons(current.filter(id => id !== pokemonId));

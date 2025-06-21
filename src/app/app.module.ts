@@ -8,6 +8,8 @@ import { PokemonListComponent } from './components/pokemon-list/pokemon-list.com
 import { HttpClientModule } from '@angular/common/http';
 import { CreateTeamComponent } from './components/create-team/create-team.component';
 import { FormsModule } from '@angular/forms';
+import { TeamListComponent } from './components/team-list/team-list.component';
+import { StartGameComponent } from './components/start-game/start-game.component';
 
 
 export function playerFactory() {
@@ -19,7 +21,9 @@ export function playerFactory() {
     AppComponent,
     LoaderComponent,
     PokemonListComponent,
-    CreateTeamComponent
+    CreateTeamComponent,
+    TeamListComponent,
+    StartGameComponent
   ],
   imports: [
     BrowserModule,

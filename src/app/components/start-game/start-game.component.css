@@ -1,0 +1,14 @@
+.bg{
+    background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.8)), url('/assets/pokeball-bg.png') center/cover no-repeat;
+    min-height: 100vh;
+    padding: 20px 0;
+}
+.pokemon-title {
+    font-family: 'Pokemon Solid', 'Arial Black', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    letter-spacing: 9px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+    color: #ffcb05; /* Pokémon yellow */
+    animation: pulse 2s ease-in-out infinite;
+  }
